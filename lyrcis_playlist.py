@@ -15,7 +15,7 @@ token = spotifyOAuth.get_cached_token()
 spotifyObject = spotipy.Spotify(auth=token['access_token'])
 genius_access_token = os.getenv('GENIUS_ACCESS_TOKEN')
 genius = lg.Genius(genius_access_token)
-i=1
+i=90
 sarki_listesi = []
 while True:
     playlist_class = input("Lutfen Playlistinizin Sinifini Giriniz (Mutlu-Ask-Enerjik-Huzunlu): ") 
