@@ -25,3 +25,4 @@ dist-ssr
 
 # Enviroenment File
 .env
+.cache
