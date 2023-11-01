@@ -11,21 +11,6 @@ import spotipy.util as util
 from json.decoder import JSONDecodeError
 from dotenv import load_dotenv
 load_dotenv()
-
-# def timed_input(prompt, timeout, timeoutmsg):
-#     def timeout_error(*_):
-#         raise TimeoutError
-#     signal.signal(signal.SIGALRM, timeout_error)
-#     signal.alarm(timeout)
-#     try:
-#         answer = input(prompt)
-#         signal.alarm(0)
-#         return answer
-#     except TimeoutError:
-#         if timeoutmsg:
-#             print(timeoutmsg)
-#         signal.signal(signal.SIGALRM, signal.SIG_IGN)
-#         return None
 def timed_input(prompt, timeout, timeoutmsg):
     result = [None]
 
@@ -98,7 +83,7 @@ while True:
         # song = genius.search_songs(search_query)
 
         try:
-            lyrics = song.lyrics
+            lyrics = song.lyricsf
             url = song.url
             print()
             print(lyrics)
