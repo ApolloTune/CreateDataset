@@ -1,4 +1,6 @@
 import json
+import re
+
 import os
 from json.decoder import JSONDecodeError
 
@@ -57,10 +59,39 @@ def filter_songs_with_title_in_lyrics(fileName):
         json.dump(filtered_data, file2, ensure_ascii=False, indent=4)
     print("Lyrics'i bozuk olan şarkılar silindi...")
 
+def clean_lyrics(lyrics):
+    cleaned_lyrics = re.sub(r'\[.*?\]', '', lyrics)
+    return cleaned_lyrics.strip()
+def remove_lyrics_header(lyrics):
+    lyrics = lyrics.strip()
 
-print("Şarkı adeti:",json_size("sarki_sozleri.json"))
+    start = lyrics.find("Lyrics")
+    if start != -1:
+        end = lyrics.find("\n", start)
+        if end != -1:
+            lyrics = lyrics[end + 1:]
+
+    return lyrics.strip()
+
+def clean_lyrics_in_json(fileName):
+    with open(fileName, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    for song in data:
+        song['lyrics'] = clean_lyrics(song['lyrics'])
+        song['lyrics'] = remove_lyrics_header(song['lyrics'])
+        song['lyrics'] = song['lyrics'].replace('\n', '')
+
+    with open(fileName, 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+    print("Sarki Sozleri Duzenlendi")
+
+
+print("Şarkı adeti:",json_size("sarki_sozleri_ask.json"))
 # remove_id_from_songs("sarki_sozleri.json")
-print("Tekrar Etmeyen Şarkı Adeti: ",non_duplicated_size("sarki_sozleri.json"))
+print("Tekrar Etmeyen Şarkı Adeti: ", non_duplicated_size("sarki_sozleri_ask.json"))
 # remove_duplicated_from_songs("sarki_sozleri.json")
 # filter_songs_with_title_in_lyrics("sarki_sozleri.json")
 # add_id_from_songs("sarki_sozleri.json")
+# clean_lyrics_in_json("sarki_sozleri_ask.json")
+add_id_from_songs("sarki_sozleri_ask.json")
