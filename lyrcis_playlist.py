@@ -30,11 +30,10 @@ while True:
         try:
             lyrics = song.lyrics
             sarki_listesi.append({
-                "id":i,
                 "title": title,
                 "artist": artist,
                 "lyrics": lyrics,
-                "class":playlist_class
+                "class": playlist_class
             })
             print()
             print(f"{i}. sarki sozleri: {lyrics}")
