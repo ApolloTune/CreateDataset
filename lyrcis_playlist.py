@@ -25,9 +25,9 @@ while True:
     for item in results["items"]:
         track = item['track']
         title = track['name']
-        artist = ', '.join([artist['name'] for artist in track['artists']])
-        song = genius.search_song(title=title, artist=artist)
         try:
+            artist = ', '.join([artist['name'] for artist in track['artists']])
+            song = genius.search_song(title=title, artist=artist)
             lyrics = song.lyrics
             sarki_listesi.append({
                 "title": title,
