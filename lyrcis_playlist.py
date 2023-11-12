@@ -18,14 +18,14 @@ genius = lg.Genius(genius_access_token, timeout=20)
 i=90
 sarki_listesi = []
 while True:
-    playlist_class = input("Lutfen Playlistinizin Sinifini Giriniz (Hareketli-Ask-Motivasyon-Huzunlu): ")
+    playlist_class = input("Lutfen Playlistinizin Sinifini Giriniz (Hareketli-Ask-Motivasyon-Arabesk): ")
     playlist_link = input("Lutfen Spotify'dan çekmek istediğiniz playlist'in bağlantısını giriniz: ")
     playlist_id = playlist_link.split('/')[-1].split('?')[0]
     results = spotifyObject.playlist_items(playlist_id)
     for item in results["items"]:
-        track = item['track']
-        title = track['name']
         try:
+            track = item['track']
+            title = track['name']
             artist = ', '.join([artist['name'] for artist in track['artists']])
             song = genius.search_song(title=title, artist=artist)
             lyrics = song.lyrics

@@ -73,6 +73,16 @@ def remove_lyrics_header(lyrics):
 
     return lyrics.strip()
 
+def add_space_in_lyrics(lyrics):
+    add_space_lyrics = ""
+    for i in range(len(lyrics) - 1):
+        add_space_lyrics += lyrics[i]
+        if (lyrics[i].islower() or lyrics[i] in "?!.,") and lyrics[i + 1].isupper():
+            add_space_lyrics += " "
+
+    add_space_lyrics += lyrics[-1]
+    return add_space_lyrics
+
 def clean_lyrics_in_json(fileName):
     with open(fileName, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -81,16 +91,20 @@ def clean_lyrics_in_json(fileName):
         song['lyrics'] = clean_lyrics(song['lyrics'])
         song['lyrics'] = remove_lyrics_header(song['lyrics'])
         song['lyrics'] = song['lyrics'].replace('\n', '')
-
+        song['lyrics'] = add_space_in_lyrics(song['lyrics'])
     with open(fileName, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
     print("Sarki Sozleri Duzenlendi")
+    
+
 
 filename = input("Lutfen dosyanizin ismini giriniz: ")
 print("Şarkı adeti:",json_size(filename))
-remove_id_from_songs(filename)
 # print("Tekrar Etmeyen Şarkı Adeti: ", non_duplicated_size(filename))
 # remove_duplicated_from_songs(filename)
+# print("Şarkı adeti:",json_size(filename))
 # filter_songs_with_title_in_lyrics(filename)
+# print("Şarkı adeti:",json_size(filename))
 # clean_lyrics_in_json(filename)
+remove_id_from_songs(filename)
 add_id_from_songs(filename)
