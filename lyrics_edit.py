@@ -6,21 +6,23 @@ from json.decoder import JSONDecodeError
 
 
 def json_size(fileName):
-    with open(fileName,'r', encoding='utf-8') as file:
+    with open(fileName, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return len(data)
 
+
 def remove_id_from_songs(fileName):
-    with open(fileName,'r',encoding="utf-8") as file:
+    with open(fileName, 'r', encoding="utf-8") as file:
         data = json.load(file)
     for song in data:
         del song["id"]
-    with open(fileName,'w',encoding='utf-8') as file2:
+    with open(fileName, 'w', encoding='utf-8') as file2:
         json.dump(data, file2, ensure_ascii=False, indent=4)
     print('Dosyadaki id alani silindi...')
 
+
 def add_id_from_songs(fileName):
-    with open(fileName,'r',encoding="utf-8") as file:
+    with open(fileName, 'r', encoding="utf-8") as file:
         data = json.load(file)
     for i, song in enumerate(data, start=1):
         song["id"] = i
@@ -28,8 +30,9 @@ def add_id_from_songs(fileName):
         json.dump(data, file2, ensure_ascii=False, indent=4)
     print('Dosyaya id alani eklendi...')
 
+
 def non_duplicated_size(fileName):
-    with open(fileName,'r',encoding="utf-8") as file:
+    with open(fileName, 'r', encoding="utf-8") as file:
         data = json.load(file)
     unique_song = {}
     for song in data:
@@ -37,8 +40,10 @@ def non_duplicated_size(fileName):
         if title not in unique_song:
             unique_song[title] = song
     return len(list(unique_song.values()))
+
+
 def remove_duplicated_from_songs(fileName):
-    with open(fileName,'r',encoding="utf-8") as file:
+    with open(fileName, 'r', encoding="utf-8") as file:
         data = json.load(file)
     unique_song = {}
     for song in data:
@@ -49,19 +54,23 @@ def remove_duplicated_from_songs(fileName):
         json.dump(list(unique_song.values()), file2, ensure_ascii=False, indent=4)
     print('Tekrar eden veriler silindi')
 
+
 def filter_songs_with_title_in_lyrics(fileName):
-    with open(fileName,'r', encoding="utf-8") as file:
+    with open(fileName, 'r', encoding="utf-8") as file:
         data = json.load(file)
     not_filtered_data = [song for song in data if song["title"].lower() not in song["lyrics"].lower()]
     filtered_data = [song for song in data if song["title"].lower() in song["lyrics"].lower()]
-    print("Lyrics'i yanlış olan şarkı adeti: ",len(not_filtered_data))
-    with open(fileName,'w', encoding='utf-8') as file2:
+    print("Lyrics'i yanlış olan şarkı adeti: ", len(not_filtered_data))
+    with open(fileName, 'w', encoding='utf-8') as file2:
         json.dump(filtered_data, file2, ensure_ascii=False, indent=4)
     print("Lyrics'i bozuk olan şarkılar silindi...")
+
 
 def clean_lyrics(lyrics):
     cleaned_lyrics = re.sub(r'\[.*?\]', '', lyrics)
     return cleaned_lyrics.strip()
+
+
 def remove_lyrics_header(lyrics):
     lyrics = lyrics.strip()
 
@@ -73,6 +82,7 @@ def remove_lyrics_header(lyrics):
 
     return lyrics.strip()
 
+
 def add_space_in_lyrics(lyrics):
     add_space_lyrics = ""
     for i in range(len(lyrics) - 1):
@@ -82,6 +92,7 @@ def add_space_in_lyrics(lyrics):
 
     add_space_lyrics += lyrics[-1]
     return add_space_lyrics
+
 
 def clean_lyrics_in_json(fileName):
     with open(fileName, 'r', encoding='utf-8') as file:
@@ -95,11 +106,10 @@ def clean_lyrics_in_json(fileName):
     with open(fileName, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
     print("Sarki Sozleri Duzenlendi")
-    
 
 
 filename = input("Lutfen dosyanizin ismini giriniz: ")
-print("Şarkı adeti:",json_size(filename))
+print("Şarkı adeti:", json_size(filename))
 # print("Tekrar Etmeyen Şarkı Adeti: ", non_duplicated_size(filename))
 # remove_duplicated_from_songs(filename)
 # print("Şarkı adeti:",json_size(filename))

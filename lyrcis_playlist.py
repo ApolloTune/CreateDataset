@@ -5,6 +5,7 @@ import lyricsgenius as lg
 import spotipy.util as util
 from json.decoder import JSONDecodeError
 from dotenv import load_dotenv
+
 load_dotenv()
 scope = "playlist-read-private"
 spotifyOAuth = spotipy.SpotifyOAuth(client_id=os.getenv('SPOTIPY_CLIENT_ID'),
@@ -15,7 +16,7 @@ token = spotifyOAuth.get_cached_token()
 spotifyObject = spotipy.Spotify(auth=token['access_token'])
 genius_access_token = os.getenv('GENIUS_ACCESS_TOKEN')
 genius = lg.Genius(genius_access_token, timeout=20)
-i=90
+i = 90
 sarki_listesi = []
 while True:
     playlist_class = input("Lutfen Playlistinizin Sinifini Giriniz (Hareketli-Ask-Motivasyon-Arabesk): ")
@@ -46,7 +47,7 @@ while True:
     devam_et = input("Başka bir playlist çekmek istiyor musunuz? (E/H): ")
     if devam_et.lower() != 'e':
         break
-fileName = "sarki_sozleri_"+playlist_class.lower()+".json"
+fileName = "sarki_sozleri_" + playlist_class.lower() + ".json"
 with open(fileName, "a", encoding="utf-8") as json_dosyasi:
     json.dump(sarki_listesi, json_dosyasi, indent=4, ensure_ascii=False)
-print("Veri JSON dosyasına yazıldı: sarki_sozleri"+playlist_class.lower()+".json")
+print("Veri JSON dosyasına yazıldı: sarki_sozleri" + playlist_class.lower() + ".json")

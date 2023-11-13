@@ -10,7 +10,10 @@ import lyricsgenius as lg
 import spotipy.util as util
 from json.decoder import JSONDecodeError
 from dotenv import load_dotenv
+
 load_dotenv()
+
+
 def timed_input(prompt, timeout, timeoutmsg):
     result = [None]
 
@@ -34,6 +37,7 @@ def sleeping(duration, result, index):
     time.sleep(duration)
     result[index] = True
     sys.exit()
+
 
 # Scope required for currently playing
 scope = "user-read-currently-playing"
@@ -75,7 +79,7 @@ while True:
         length_ms = current['item']['duration_ms']
         progress_ms = current['progress_ms']
         time_ms = length_ms - progress_ms
-        time_sec = int((time_ms/100000))
+        time_sec = int((time_ms / 100000))
         # id = current['item']['id']
         search_query = artist + " " + title
 
@@ -129,7 +133,6 @@ while True:
 
     # Check if access token has expired or not
     if spotifyOAuth.is_token_expired(token) == True:
-
         print(">> access token has expired -- refreshing...")
 
         token = spotifyOAuth.get_access_token()
